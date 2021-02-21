@@ -1,0 +1,47 @@
+
+#!/bin/bash
+
+while  true
+do
+
+   for u in $(cut -d: -f1 /etc/passwd); do
+
+       activ=0;
+
+       for i in $(who | cut -d' ' -f1 | sort | uniq); do
+
+          if [ $u == $i ]; then
+
+             activ=1;
+
+          fi
+
+       done
+
+          if [ $activ == 0 ] && [ -d $u ]; then
+
+             sudo rm $u/procs;
+
+             sudo rmdir $u;
+
+          elif [ $activ == 1 ] && [ -d $u ]; then
+
+              sudo chown $(whoami) $u/procs;
+
+              sudo ps -u $u > $u/procs;
+
+           elif [ $activ == 1 ] && [ ! -d $u ]; then
+
+               sudo mkdir $u;
+
+               sudo touch $u/procs
+
+               sudo chown $(whoami) $u/procs;
+
+               sudo ps -u $u > $u/procs;
+
+            fi
+  done
+
+  sleep 5;
+done

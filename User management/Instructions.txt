@@ -1,0 +1,16 @@
+CREATION OF THE PSEUDO FILE SYSTEM
+
+dd if=/dev/zero of=disk-image count=40960
+ls -l disk-image
+/sbin/mkfs -t ext3 -q disk-image
+mkdir MountPoint
+cat /proc/mounts 
+sudo mount -o loop=/dev/loop0 disk-image MountPoint
+cat /proc/mounts
+cd /home/oana/MountPoint
+
+INSTRUCTIONS FOR CREATING / RUNNING BASH
+
+sudo nano bash
+sudo chmod +x bash
+./bash
